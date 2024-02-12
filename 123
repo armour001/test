@@ -1,1 +1,1 @@
-https://github.com/lyswhut/lx-music-desktop/releases
+return val.replace(/\D/g, '').replace(/^0{1,}/g, '').slice(0, len ?? MAX_INPUT_NUMBER_LENGTH)
