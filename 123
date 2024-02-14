@@ -1,49 +1,98 @@
-/**
-     * MD5加密字符串
-     *
-     * @param source 源字符串
-     * @return 加密后的字符串
-     */
-    public static String getMD5(String source) {
-        String mdString = null;
-        if (source != null) {
-            try {
-                mdString = getMD5(source.getBytes("UTF-8"));
-            } catch (UnsupportedEncodingException e) {
-                e.printStackTrace();
-            }
-        }
-        return mdString;
-    }
+ <el-form
+      ref="resetFormRef"
+      :model="resetForm"
+      :rules="resetPasswordRules(resetForm)"
+      size="large"
+    >
+      <el-form-item
+        prop="password"
+        :label="`${t('旧密码')}:`"
+        label-width="100"
+      >
+        <el-input
+          clearable
+          show-password
+          v-model="resetForm.oldPassword"
+          :placeholder="t('请输入旧密码')"
+        />
+      </el-form-item>
 
-    /**
-     * MD5加密以byte数组表示的字符串
-     *
-     * @param source 源字节数组
-     * @return 加密后的字符串
-     */
-    public static String getMD5(byte[] source) {
-        String s = null;
+      <el-form-item
+        prop="password"
+        :label="`${t('新密码')}:`"
+        label-width="100"
+      >
+        <el-input
+          clearable
+          show-password
+          v-model="resetForm.newPassword"
+          :placeholder="t('请输入8个字符，包含英文数字')"
+        />
+      </el-form-item>
 
-        final int temp = 0xf;
-        final int arraySize = 32;
-        final int strLen = 16;
-        final int offset = 4;
-        try {
-            MessageDigest md = MessageDigest
-                    .getInstance("MD5");
-            md.update(source);
-            byte[] tmp = md.digest();
-            char[] str = new char[arraySize];
-            int k = 0;
-            for (int i = 0; i < strLen; i++) {
-                byte byte0 = tmp[i];
-                str[k++] = hexDigitsChar[byte0 >>> offset & temp];
-                str[k++] = hexDigitsChar[byte0 & temp];
-            }
-            s = new String(str);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return s;
-    }
+      <el-form-item
+        prop="confirmPassword"
+        :label="`${t('确认密码')}:`"
+        label-width="100"
+      >
+        <el-input
+          clearable
+          show-password
+          v-model="resetForm.confirmPassword"
+          :placeholder="t('请再次输入新密码')"
+        />
+      </el-form-item>
+    </el-form>
+
+const resetForm = reactive({
+  oldPassword: '',
+  newPassword: '',
+  confirmPassword: ''
+});
+
+/** 重置密码校验 */
+const resetPasswordRules = <T>(form: T) => {
+  return {
+    password: [
+      {
+        validator: (_, value, callback) => {
+          if (value === "") {
+            callback(new Error(t("旧密码不能为空")));
+          } else {
+            callback();
+          }
+        },
+        trigger: "blur"
+      }
+    ],
+    newPassword: [
+      {
+        validator: (_, value, callback) => {
+          if (value === "") {
+            callback(new Error(t("请输入密码")));
+          } else if (!REGEXP_PWD.test(value)) {
+            callback(new Error(t("密码至少8个字符，包括字母和数字")));
+          } else {
+            callback();
+          }
+        },
+        trigger: "blur"
+      }
+    ],
+    confirmPassword: [
+      {
+        validator: (_, value, callback) => {
+          if (value === "") {
+            callback(new Error(t("确认密码不能为空")));
+          } else if (form.) {
+            callback(new Error(t("两次输入的密码不一致，请重新输入")));
+          } else {
+            callback();
+          }
+        },
+        trigger: "blur"
+      }
+    ],
+
+  }
+}
