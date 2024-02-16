@@ -162,84 +162,30 @@ const sourceList = [
   }
 ]
 
-const baseList = [
-  {
-    "path": "/sysRole/roleManager",
-    "name": "SYSROLE_ROLEMANAGER",
-    "meta": {
-      "title": "角色管理",
-      "icon": "sysRole",
-      "rank": 1
-    },
-    "children": [
-      {
-        "path": "/sysRole/roleManager/v1/test",
-        "name": "SYSROLE_ROLEMANAGER_V1_TEST",
-        "meta": {
-          "title": "测试角色菜单",
-          "enTitle": "enName",
-          "showParent": true,
-          "childResourceList": [
-            {
-              "childResourceList": [],
-              "enName": "roleManagerQuery",
-              "id": 300,
-              "name": "页面查看",
-              "parentId": 310,
-              "resourceFlag": 1,
-              "routerPath": "/sysRole/v1/queryRoleList",
-              "sort": 1,
-              "type": 1
-            },
-            {
-              "childResourceList": [],
-              "enName": "roleManagerAdd",
-              "id": 301,
-              "name": "新增角色",
-              "parentId": 310,
-              "resourceFlag": 1,
-              "routerPath": "/sysRole/v1/insert",
-              "sort": 2,
-              "type": 1
-            }
-          ],
-        }
-      },
-      {
-        "path": "/sysRole/roleManager/v1/test1",
-        "name": "SYSROLE_ROLEMANAGER_V1_TEST",
-        "meta": {
-          "title": "测试角色菜单1",
-          "enTitle": "test1",
-          "showParent": true,
-          "childResourceList": [
-            {
-              "childResourceList": [],
-              "enName": "roleManagerUpdate",
-              "id": 302,
-              "name": "编辑角色",
-              "parentId": 311,
-              "resourceFlag": 1,
-              "routerPath": "/sysRole/v1/update",
-              "sort": 3,
-              "type": 1
-            },
-            {
-              "childResourceList": [],
-              "enName": "roleManagerDelete",
-              "id": 303,
-              "name": "删除角色",
-              "parentId": 311,
-              "resourceFlag": 1,
-              "routerPath": "/sysRole/v1/delete",
-              "sort": 4,
-              "type": 1
-            }
-          ],
-        }
-      },
-    ]
-  },
-]
+const transformItem = ( item ) => {
+  console.log( 'test1.js文件 166==============行打印=', item );
+  const baseItem = {
+    path: item.path,
+    name: item.path.slice( 1 ).split( '/' ).join( '_' ).toUpperCase(),
+    meta: {
+      title: item.name,
+      icon: item.enName,
+      rank: item.sort
+    }
+  };
 
-使用js写一个方法，将sourceList 变成baselist这种结构跟字段
+  if ( item.type === 0 ) {
+    baseItem.children = item.childResourceList.map( transformItem );
+  } else {
+    baseItem.meta.childResourceList = item.childResourceList.map( grandChildItem => ( {
+      ...grandChildItem,
+      enName: grandChildItem.enName.toUpperCase()
+    } ) );
+  }
+
+  return baseItem;
+}
+
+const baseList = sourceList.map( transformItem );
+
+console.log( 'test1.js文件 190==============行打印=', baseList );
