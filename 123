@@ -1,13 +1,79 @@
 const sourceList = [
   {
-    "enName": "roleManager",
-    "id": 3,
-    "name": "角色管理",
+    "childResourceList": [
+      {
+        "childResourceList": [],
+        "enName": "userManagerQuery",
+        "id": 100,
+        "name": "页面查看",
+        "parentId": 1,
+        "path": "/userManager/query",
+        "resourceFlag": 1,
+        "routerPath": "/sysUser/v1/queryUserList",
+        "sort": 1,
+        "type": 1
+      },
+      {
+        "childResourceList": [],
+        "enName": "userManagerAdd",
+        "id": 101,
+        "name": "新增用户",
+        "parentId": 1,
+        "path": "/userManager/insert",
+        "resourceFlag": 1,
+        "routerPath": "/sysUser/v1/insert",
+        "sort": 2,
+        "type": 1
+      }
+    ],
+    "enName": "userManager",
+    "id": 1,
+    "name": "用户管理",
     "parentId": 0,
+    "path": "/userManager",
     "resourceFlag": 1,
-    "routerPath": "/sysRole/roleManager",
-    "sort": 3,
-    "type": 0,
+    "routerPath": "/sysUser/userManager",
+    "sort": 1,
+    "type": 0
+  },
+  {
+    "childResourceList": [
+      {
+        "childResourceList": [],
+        "enName": "tenantManagerQuery",
+        "id": 200,
+        "name": "页面查看",
+        "parentId": 2,
+        "path": "/tenantManager/query",
+        "resourceFlag": 1,
+        "routerPath": "/sysTenant/v1/queryTenantList",
+        "sort": 1,
+        "type": 1
+      },
+      {
+        "childResourceList": [],
+        "enName": "tenantManagerAdd",
+        "id": 201,
+        "name": "新增商户",
+        "parentId": 2,
+        "path": "/tenantManager/insert",
+        "resourceFlag": 1,
+        "routerPath": "/sysTenant/v1/insert",
+        "sort": 2,
+        "type": 1
+      }
+    ],
+    "enName": "tenantManager",
+    "id": 2,
+    "name": "商户管理",
+    "parentId": 0,
+    "path": "/tenantManager",
+    "resourceFlag": 1,
+    "routerPath": "/sysTenant/tenantManager",
+    "sort": 2,
+    "type": 0
+  },
+  {
     "childResourceList": [
       {
         "childResourceList": [
@@ -17,6 +83,7 @@ const sourceList = [
             "id": 300,
             "name": "页面查看",
             "parentId": 310,
+            "path": "/roleManager/query",
             "resourceFlag": 1,
             "routerPath": "/sysRole/v1/queryRoleList",
             "sort": 1,
@@ -28,6 +95,7 @@ const sourceList = [
             "id": 301,
             "name": "新增角色",
             "parentId": 310,
+            "path": "/roleManager/insert",
             "resourceFlag": 1,
             "routerPath": "/sysRole/v1/insert",
             "sort": 2,
@@ -38,8 +106,9 @@ const sourceList = [
         "id": 310,
         "name": "测试角色菜单",
         "parentId": 3,
+        "path": "/roleManager/test",
         "resourceFlag": 1,
-        "routerPath": "/sysRole/roleManager/v1/test",
+        "routerPath": "/sysRole/v1/test",
         "sort": 1,
         "type": 0
       },
@@ -51,6 +120,7 @@ const sourceList = [
             "id": 302,
             "name": "编辑角色",
             "parentId": 311,
+            "path": "/roleManager/update",
             "resourceFlag": 1,
             "routerPath": "/sysRole/v1/update",
             "sort": 3,
@@ -62,6 +132,7 @@ const sourceList = [
             "id": 303,
             "name": "删除角色",
             "parentId": 311,
+            "path": "/roleManager/delete",
             "resourceFlag": 1,
             "routerPath": "/sysRole/v1/delete",
             "sort": 4,
@@ -72,12 +143,22 @@ const sourceList = [
         "id": 311,
         "name": "测试角色菜单1",
         "parentId": 3,
+        "path": "/roleManager/test1",
         "resourceFlag": 1,
         "routerPath": "/sysRole/v1/test1",
         "sort": 2,
         "type": 0
       }
-    ]
+    ],
+    "enName": "roleManager",
+    "id": 3,
+    "name": "角色管理",
+    "parentId": 0,
+    "path": "/roleManager",
+    "resourceFlag": 1,
+    "routerPath": "/sysRole/roleManager",
+    "sort": 3,
+    "type": 0
   }
 ]
 
