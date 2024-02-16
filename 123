@@ -1,1 +1,164 @@
-[ResourceVo(id=1, name=用户管理, enName=userManager, routerPath=/sysUser/userManager, parentId=0, type=0, sort=1, resourceFlag=1, ChildResourceList=[ResourceVo(id=100, name=页面查看, enName=userManagerQuery, routerPath=/sysUser/v1/queryUserList, parentId=1, type=1, sort=1, resourceFlag=1, ChildResourceList=[]), ResourceVo(id=101, name=新增用户, enName=userManagerAdd, routerPath=/sysUser/v1/insert, parentId=1, type=1, sort=2, resourceFlag=1, ChildResourceList=[])]), ResourceVo(id=2, name=商户管理, enName=tenantManager, routerPath=/sysTenant/tenantManager, parentId=0, type=0, sort=2, resourceFlag=1, ChildResourceList=[ResourceVo(id=200, name=页面查看, enName=tenantManagerQuery, routerPath=/sysTenant/v1/queryTenantList, parentId=2, type=1, sort=1, resourceFlag=1, ChildResourceList=[]), ResourceVo(id=201, name=新增商户, enName=tenantManagerAdd, routerPath=/sysTenant/v1/insert, parentId=2, type=1, sort=2, resourceFlag=1, ChildResourceList=[])]), ResourceVo(id=3, name=角色管理, enName=roleManager, routerPath=/sysRole/roleManager, parentId=0, type=0, sort=3, resourceFlag=1, ChildResourceList=[ResourceVo(id=300, name=页面查看, enName=roleManagerQuery, routerPath=/sysRole/v1/queryRoleList, parentId=3, type=1, sort=1, resourceFlag=1, ChildResourceList=[]), ResourceVo(id=301, name=新增角色, enName=roleManagerAdd, routerPath=/sysRole/v1/insert, parentId=3, type=1, sort=2, resourceFlag=1, ChildResourceList=[])])]
+const sourceList = [
+  {
+    "enName": "roleManager",
+    "id": 3,
+    "name": "角色管理",
+    "parentId": 0,
+    "resourceFlag": 1,
+    "routerPath": "/sysRole/roleManager",
+    "sort": 3,
+    "type": 0,
+    "childResourceList": [
+      {
+        "childResourceList": [
+          {
+            "childResourceList": [],
+            "enName": "roleManagerQuery",
+            "id": 300,
+            "name": "页面查看",
+            "parentId": 310,
+            "resourceFlag": 1,
+            "routerPath": "/sysRole/v1/queryRoleList",
+            "sort": 1,
+            "type": 1
+          },
+          {
+            "childResourceList": [],
+            "enName": "roleManagerAdd",
+            "id": 301,
+            "name": "新增角色",
+            "parentId": 310,
+            "resourceFlag": 1,
+            "routerPath": "/sysRole/v1/insert",
+            "sort": 2,
+            "type": 1
+          }
+        ],
+        "enName": "test",
+        "id": 310,
+        "name": "测试角色菜单",
+        "parentId": 3,
+        "resourceFlag": 1,
+        "routerPath": "/sysRole/roleManager/v1/test",
+        "sort": 1,
+        "type": 0
+      },
+      {
+        "childResourceList": [
+          {
+            "childResourceList": [],
+            "enName": "roleManagerUpdate",
+            "id": 302,
+            "name": "编辑角色",
+            "parentId": 311,
+            "resourceFlag": 1,
+            "routerPath": "/sysRole/v1/update",
+            "sort": 3,
+            "type": 1
+          },
+          {
+            "childResourceList": [],
+            "enName": "roleManagerDelete",
+            "id": 303,
+            "name": "删除角色",
+            "parentId": 311,
+            "resourceFlag": 1,
+            "routerPath": "/sysRole/v1/delete",
+            "sort": 4,
+            "type": 1
+          }
+        ],
+        "enName": "test1",
+        "id": 311,
+        "name": "测试角色菜单1",
+        "parentId": 3,
+        "resourceFlag": 1,
+        "routerPath": "/sysRole/v1/test1",
+        "sort": 2,
+        "type": 0
+      }
+    ]
+  }
+]
+
+const baseList = [
+  {
+    "path": "/sysRole/roleManager",
+    "name": "SYSROLE_ROLEMANAGER",
+    "meta": {
+      "title": "角色管理",
+      "icon": "sysRole",
+      "rank": 1
+    },
+    "children": [
+      {
+        "path": "/sysRole/roleManager/v1/test",
+        "name": "SYSROLE_ROLEMANAGER_V1_TEST",
+        "meta": {
+          "title": "测试角色菜单",
+          "enTitle": "enName",
+          "showParent": true,
+          "childResourceList": [
+            {
+              "childResourceList": [],
+              "enName": "roleManagerQuery",
+              "id": 300,
+              "name": "页面查看",
+              "parentId": 310,
+              "resourceFlag": 1,
+              "routerPath": "/sysRole/v1/queryRoleList",
+              "sort": 1,
+              "type": 1
+            },
+            {
+              "childResourceList": [],
+              "enName": "roleManagerAdd",
+              "id": 301,
+              "name": "新增角色",
+              "parentId": 310,
+              "resourceFlag": 1,
+              "routerPath": "/sysRole/v1/insert",
+              "sort": 2,
+              "type": 1
+            }
+          ],
+        }
+      },
+      {
+        "path": "/sysRole/roleManager/v1/test1",
+        "name": "SYSROLE_ROLEMANAGER_V1_TEST",
+        "meta": {
+          "title": "测试角色菜单1",
+          "enTitle": "test1",
+          "showParent": true,
+          "childResourceList": [
+            {
+              "childResourceList": [],
+              "enName": "roleManagerUpdate",
+              "id": 302,
+              "name": "编辑角色",
+              "parentId": 311,
+              "resourceFlag": 1,
+              "routerPath": "/sysRole/v1/update",
+              "sort": 3,
+              "type": 1
+            },
+            {
+              "childResourceList": [],
+              "enName": "roleManagerDelete",
+              "id": 303,
+              "name": "删除角色",
+              "parentId": 311,
+              "resourceFlag": 1,
+              "routerPath": "/sysRole/v1/delete",
+              "sort": 4,
+              "type": 1
+            }
+          ],
+        }
+      },
+    ]
+  },
+]
+
+使用js写一个方法，将sourceList 变成baselist这种结构跟字段
