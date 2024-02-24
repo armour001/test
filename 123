@@ -1,134 +1,50 @@
-<template>
-  <el-form
-    ref="ruleFormRef"
-    :model="newFormInline"
-    :rules="formRules"
-    class="pr-10"
-    label-width="100px"
-  >
-    <el-form-item :label="t('账号名称')" prop="name" required>
-      <el-input
-        :disabled="!!newFormInline.id"
-        v-model="newFormInline.name"
-        clearable
-        :placeholder="t('请输入6-20个英文字母或数字')"
-      />
-    </el-form-item>
-
-    <el-form-item :label="t('所属部门')" prop="dept">
-      <el-select v-model="newFormInline.dept" filterable clearable>
-        <el-option
-          v-for="item in depList"
-          :key="item.key"
-          :label="item.val"
-          :value="item.key.toString()"
-        />
-      </el-select>
-    </el-form-item>
-
-    <el-form-item :label="t('所属角色')" prop="roleId">
-      <el-select v-model="newFormInline.roleId" filterable clearable>
-        <el-option
-          :label="item.name"
-          :value="item.id"
-          v-for="item in roleList"
-          :key="item.id"
-        />
-      </el-select>
-    </el-form-item>
-
-    <el-form-item :label="t('备注')" prop="comment">
-      <el-input
-        type="textarea"
-        v-model="newFormInline.comment"
-        maxLength="255"
-        :placeholder="t('只能输入255个字符的内容')"
-      />
-    </el-form-item>
-
-    <el-form-item :label="t('账号状态')" prop="status" v-if="!row.id">
-      <el-switch
-        v-model="newFormInline.status"
-        inline-prompt
-        class="pure-datatheme"
-        :active-text="t('开启')"
-        :inactive-text="t('关闭')"
-        :style="switchStyle"
-      />
-    </el-form-item>
-
-    <div class="flex justify-end">
-      <el-button @click="closeDialog">{{ t('取消') }}</el-button>
-      <el-button type="primary" @click="confirmClick">{{
-        t('确定')
-      }}</el-button>
-    </div>
-  </el-form>
-</template>
-
-<script setup lang="ts">
-import { ref } from 'vue';
-import { formRules } from './utils/rule';
-import { t } from '@/plugins/i18n';
-import { usePublicHooks } from '@/hooks';
-import { FormInstance } from 'element-plus/es/components/form';
-import { message } from '@/utils/message';
-import { depList } from './utils/map';
-import { removeEmptyStringKeys } from '@/utils/utilFn';
-
-const { switchStyle } = usePublicHooks();
-
-const props = defineProps<{
-  row: UserMangerAPI.addSysAccountRes;
-}>();
-
-const emits = defineEmits(['closeDialog']);
-
-onMounted(() => {
-  getRoleList();
-});
-
-const roleList = reactive<RoleAPI.querySysAccountListData[]>([]);
-const getRoleList = async () => {
-  const res = await API.querySysAccountList({
-    pageNum: 1,
-    pageSize: 9999
-  });
-  roleList.length = 0;
-  roleList.push(...res.data.list);
-};
-
-const ruleFormRef = ref<FormInstance>();
-// const newFormInline = reactive(props.row);
-
-const newFormInline = computed<UserMangerAPI.addSysAccountRes>({
-  get() {
-    return reactive(props.row);
-  },
-  set(val) {
-    console.log('form.vue文件 106==============行打印=', val);
-  }
-});
-const closeDialog = () => {
-  emits('closeDialog');
-};
-
-const confirmClick = () => {
-  ruleFormRef.value.validate(async v => {
-    const requestAPI = newFormInline.id ? 'updateSysAccount' : 'addSysAccount';
-    if (v) {
-      const res = await API[requestAPI]({
-        ...(removeEmptyStringKeys(
-          newFormInline
-        ) as UserMangerAPI.addSysAccountRes),
-        status: Number(newFormInline.status)
-      });
-
-      message(res.msg, { type: res.code ? 'error' : 'success' });
-      emits('closeDialog', res.code ? '' : 'reloadTable');
-    }
-  });
-};
-</script>
-
-<style lang="scss"></style>
+"k-7a97ca55": "全場結算",
+  "k31ed03b6": "四节制",
+  "kf44a7fb": "两节制",
+  "k45cb6080": "結算節",
+  "k1fc42b6a": "新增節",
+  "k-2d770fb2": "新增加时赛",
+  "k-205e0542": "无效时间",
+  "k6aa039c5": "无效值",
+  "k-47248455": "確認結算",
+  "k7f2d3f7f": "⼿動確認比嚼算全場比賽後，即開始結算全場比賽玩法，結算後無法回退。",
+  "k44a7cf17": "確認結算全場比賽",
+  "k-65953539": "节",
+  "k-38d9d40c": "⼈⼯結算",
+  "k2e4d6704": "请先结算上一盘赛事",
+  "k1d40569": "请先完成并保存事件",
+  "k-4467cd3": "请先完成盘结算",
+  "k-41ef2d33": "手动确认比赛结束后，即开始结算",
+  "k61e093f8": "全场比赛玩法，结算后无法回退。",
+  "k5e2c2440": "手球",
+  "k7dc2be9f": "冰球",
+  "k-4bfa850c": "板球",
+  "k-1ba391e": "美式足球",
+  "k-3409e55f": "羽毛球",
+  "k-59687232": "乒乓球",
+  "k2bd1f77b": "曲棍球",
+  "k338b2492": "当前盘结算时间不能小于上一局",
+  "k-4746f139": "请先结算之前的局赛事",
+  "k-49937c62": "结算局",
+  "k21bf9b0d": "请输入旧密码",
+  "k668135c8": "请输入8个字符，包含英文数字",
+  "k-268ab56a": "请再次输入新密码",
+  "k3217837": "重置密码",
+  "k-56e5f745": "旧密码不能为空",
+  "k-5bc18fd3": "密码至少8个字符，包括字母和数字",
+  "k3a926a1": "确认密码不能为空",
+  "k1de18a86": "两次输入的密码不一致，请重新输入",
+  "k-134ae1d4": "旧密码",
+  "k-7d99430e": "新密码",
+  "k-56510fc7": "确认密码",
+  "k-6afe7c44": "新密码不能为空",
+  "k-3551e259": "商户名称",
+  "k4a376a0a": "商户编号/ID",
+  "k90b660c": "请输入商户编号/ID",
+  "k128cad95": "商户类型",
+  "k-1549a63": "全部类型",
+  "k68022ee7": "全部",
+  "k168aedff": "商户对接人",
+  "k55b6e1f9": "请输入商户对接人",
+  "k-3a3a97ff": "注册时间",
+  "k-72adaeab": "开始时间",
