@@ -1,1 +1,1 @@
-at Server.app (file:///Users/z9ty-armour/Documents/code/kmgames-businese-back-stage/node_modules/.pnpm/vite@4.5.2_@types+node@20.11.23_sass@1.71.1_terser@5.28.1/node_modules/vite/dist/node/chunks/dep-52909643.js:50501:37)
+You can also disable this overlay by setting server.hmr.overlay to false in vite.config.js.
