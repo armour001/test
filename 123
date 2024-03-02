@@ -1,2 +1,17 @@
-main.ts:64 ElementPlusError: [el-radio] [API] label act as value is about to be deprecated in version 3.0.0, please use value instead.
-For more detail, please visit: https://element-plus.org/en-US/component/radio.html
+"k-18382d3": "关键字",
+  "k-3e0dec10": "模块",
+  "k-14025e5": "值 value",
+  "k2909f741": "模块 model",
+  "k-2c4d6b88": "修改时间",
+  "k-517cc41f": "数据字典",
+  "k-79fa4b0e": "修改人",
+  "k171feffc": "编辑字典",
+  "k4e977baa": "Value不能为空",
+  "k-5cce50c1": "公告分类",
+  "k11dce9e0": "新增账号成功",
+  "k551b0348": "密码",
+  "k-5da30ca7": "公告分类不能为空",
+  "k4b41fa3c": "维护时间",
+  "k-7fa68ef4": "维护设置",
+  "k-1cb99141": "确定要关闭维护状态么？",
+  "k-4a3f036": "确定开启维护状态么?"
