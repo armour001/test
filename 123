@@ -1,43 +1,186 @@
- <LeagueSelect :form="form" />
-
-
-//- leagueSelect.vue文件
-
-<template>
-  <el-form-item :label="`${t('联赛')}:`" prop="leagueId">
-    <el-select
-      v-model="form.leagueId"
-      clearable
-      filterable
-      remote
-      @change="search"
-      :remote-method="remoteMethod"
-      class="!w-[280px]"
-      :placeholder="t('请选择联赛')"
-      :loading="matchStore.matchSearchLoading"
-    >
-      <el-option
-        v-for="item in form.category === 0
-          ? matchStore.sportLeagueList
-          : matchStore.esportLeagueList"
-        :key="item.leagueId"
-        :label="item.leagueNameCn"
-        :value="item.leagueId"
-      />
-    </el-select>
-  </el-form-item>
-</template>
-
-<script setup lang="ts" generic="T">
-import { t } from '@/plugins/i18n';
-const props = defineProps<{
-  form: T;
-}>();
-
-const;
-</script>
-
-<style scoped></style>
-
-
-ts报错： 类型“[{ type: PropType<T>; required: true; }] extends [Prop<infer V, infer D>] ? unknown extends V ? IfAny<V, V, D> : V : { type: PropType<T>; required: true; }”上不存在属性“leagueId”。ts(2339)
+[
+    {
+        "id": 420374,
+        "name": "格斗结算详情",
+        "enName": "fighting",
+        "tableName": "结算平台-格斗结算详情",
+        "childResourceList": [
+            {
+                "id": 420376,
+                "name": "盘口详情",
+                "enName": "handlcapInfo",
+                "routerPath": "/",
+                "parentId": 420374,
+                "type": 1,
+                "sort": 1,
+                "resourceFlag": 0,
+                "path": "/",
+                "createdAt": "2024-04-16 14:43:59",
+                "createdBy": "admin",
+                "updatedAt": "2024-04-16 14:43:59",
+                "updatedBy": "admin",
+                "childResourceList": []
+            },
+            {
+                "id": 420379,
+                "name": "页面查看",
+                "enName": "query",
+                "routerPath": "/query",
+                "parentId": 420374,
+                "type": 1,
+                "sort": 1,
+                "resourceFlag": 0,
+                "path": "/query",
+                "createdAt": "2024-04-16 14:45:11",
+                "createdBy": "admin",
+                "updatedAt": "2024-04-16 14:45:11",
+                "updatedBy": "admin",
+                "childResourceList": []
+            },
+            {
+                "id": 420378,
+                "name": "事件列表",
+                "enName": "eventList",
+                "routerPath": "/",
+                "parentId": 420374,
+                "type": 1,
+                "sort": 2,
+                "resourceFlag": 0,
+                "path": "/",
+                "createdAt": "2024-04-16 14:45:11",
+                "createdBy": "admin",
+                "updatedAt": "2024-04-16 14:45:11",
+                "updatedBy": "admin",
+                "childResourceList": []
+            }
+        ]
+    },
+    {
+        "id": 420374,
+        "name": "格斗结算详情",
+        "enName": "fighting",
+        "tableName": "结算平台-格斗结算详情",
+        "childResourceList": [
+            {
+                "id": 420379,
+                "name": "页面查看",
+                "enName": "query",
+                "routerPath": "/query",
+                "parentId": 420374,
+                "type": 1,
+                "sort": 1,
+                "resourceFlag": 0,
+                "path": "/query",
+                "createdAt": "2024-04-16 14:45:11",
+                "createdBy": "admin",
+                "updatedAt": "2024-04-16 14:45:11",
+                "updatedBy": "admin",
+                "childResourceList": []
+            },
+            {
+                "id": 420378,
+                "name": "事件列表",
+                "enName": "eventList",
+                "routerPath": "/",
+                "parentId": 420374,
+                "type": 1,
+                "sort": 2,
+                "resourceFlag": 0,
+                "path": "/",
+                "createdAt": "2024-04-16 14:45:11",
+                "createdBy": "admin",
+                "updatedAt": "2024-04-16 14:45:11",
+                "updatedBy": "admin",
+                "childResourceList": []
+            },
+            {
+                "id": 420376,
+                "name": "盘口详情",
+                "enName": "handlcapInfo",
+                "routerPath": "/",
+                "parentId": 420374,
+                "type": 1,
+                "sort": 3,
+                "resourceFlag": 0,
+                "path": "/",
+                "createdAt": "2024-04-16 14:43:59",
+                "createdBy": "admin",
+                "updatedAt": "2024-04-16 14:53:45",
+                "updatedBy": "armour",
+                "childResourceList": []
+            }
+        ]
+    },
+    {
+        "id": 420374,
+        "name": "格斗结算详情",
+        "enName": "fighting",
+        "tableName": "结算平台-格斗结算详情",
+        "childResourceList": [
+            {
+                "id": 420379,
+                "name": "页面查看",
+                "enName": "query",
+                "routerPath": "/query",
+                "parentId": 420374,
+                "type": 1,
+                "sort": 1,
+                "resourceFlag": 0,
+                "path": "/query",
+                "createdAt": "2024-04-16 14:45:11",
+                "createdBy": "admin",
+                "updatedAt": "2024-04-16 14:45:11",
+                "updatedBy": "admin",
+                "childResourceList": []
+            },
+            {
+                "id": 420378,
+                "name": "事件列表",
+                "enName": "eventList",
+                "routerPath": "/",
+                "parentId": 420374,
+                "type": 1,
+                "sort": 2,
+                "resourceFlag": 0,
+                "path": "/",
+                "createdAt": "2024-04-16 14:45:11",
+                "createdBy": "admin",
+                "updatedAt": "2024-04-16 14:45:11",
+                "updatedBy": "admin",
+                "childResourceList": []
+            },
+            {
+                "id": 420376,
+                "name": "盘口详情",
+                "enName": "handlcapInfo",
+                "routerPath": "/",
+                "parentId": 420374,
+                "type": 1,
+                "sort": 3,
+                "resourceFlag": 0,
+                "path": "/",
+                "createdAt": "2024-04-16 14:43:59",
+                "createdBy": "admin",
+                "updatedAt": "2024-04-16 14:53:45",
+                "updatedBy": "armour",
+                "childResourceList": []
+            },
+            {
+                "id": 420400,
+                "name": "结算",
+                "enName": "settle",
+                "routerPath": "/",
+                "parentId": 420374,
+                "type": 1,
+                "sort": 4,
+                "resourceFlag": 0,
+                "path": "/",
+                "createdAt": "2024-04-16 14:54:22",
+                "createdBy": "armour",
+                "updatedAt": "2024-04-16 14:54:22",
+                "updatedBy": "armour",
+                "childResourceList": []
+            }
+        ]
+    }
+]
