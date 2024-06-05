@@ -1,3 +1,16 @@
-元素隐式具有 "any" 类型，因为类型为 "string" 的表达式不能用于索引类型 "{ getPandaMatchEventList: () => Promise<PandaMatchEventListRes>; getMatchEventByMatchId: (data: PandaMatchEventListParams) => Promise<...>; ... 248 more ...; operateUpdateUser: (data: updateUserFormType) => Promise<...>; }"。
-  在类型 "{ getPandaMatchEventList: () => Promise<PandaMatchEventListRes>; getMatchEventByMatchId: (data: PandaMatchEventListParams) => Promise<...>; ... 248 more ...; operateUpdateUser: (data: updateUserFormType) => Promise<...>; }" 上找不到具有类型为 "string" 的参数的索引签名。ts-plugin(7053)
-(parameter) type: string
+remote: Resolving deltas: 100% (19/19)
+remote: Processing changes: refs: 1, done    
+remote: 
+remote: ERROR:  In commit bdeee83a1ae13809e1b725ee4ac626b9e84a00fb
+remote: ERROR:  author email address jsbaibai@itcom888.com
+remote: ERROR:  does not match your user account.
+remote: ERROR:
+remote: ERROR:  The following addresses are currently registered:
+remote: ERROR:    jsarmour@itcom888.com
+remote: ERROR:
+remote: ERROR:  To register an email address, please visit:
+remote: ERROR:  http://kmg.abcmoreonline.com:8088/#/settings/contact
+remote: 
+remote: 
+To http://kmg.abcmoreonline.com:8088/a/kmgames/kmgames-back-stage
+ ! [remote rejected]   fat -> fat (invalid author)
