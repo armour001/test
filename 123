@@ -1,16 +1,74 @@
-remote: Resolving deltas: 100% (19/19)
-remote: Processing changes: refs: 1, done    
-remote: 
-remote: ERROR:  In commit bdeee83a1ae13809e1b725ee4ac626b9e84a00fb
-remote: ERROR:  author email address jsbaibai@itcom888.com
-remote: ERROR:  does not match your user account.
-remote: ERROR:
-remote: ERROR:  The following addresses are currently registered:
-remote: ERROR:    jsarmour@itcom888.com
-remote: ERROR:
-remote: ERROR:  To register an email address, please visit:
-remote: ERROR:  http://kmg.abcmoreonline.com:8088/#/settings/contact
-remote: 
-remote: 
-To http://kmg.abcmoreonline.com:8088/a/kmgames/kmgames-back-stage
- ! [remote rejected]   fat -> fat (invalid author)
+<script setup lang="ts">
+import { ref, computed, onMounted } from "vue";
+import { useDark, useECharts } from "@pureadmin/utils";
+
+// 兼容dark主题
+const { isDark } = useDark();
+let theme = computed(() => {
+  return isDark.value ? "dark" : "default";
+});
+
+// 初始化ECharts
+const chartRef = ref();
+const { setOptions } = useECharts(chartRef, { theme });
+
+// 根据配置项渲染ECharts
+setOptions({
+  tooltip: {
+    trigger: "item",
+    axisPointer: {
+      type: "cross"
+    }
+  },
+  xAxis: [
+    {
+      type: "value"
+    }
+  ],
+  yAxis: [
+    {
+      type: "value"
+    }
+  ],
+  series: [
+    {
+      symbolSize: 8,
+      data: [
+        [10.0, 8.04],
+        [8.07, 6.95],
+        [13.0, 7.58],
+        [9.05, 8.81],
+        [11.0, 8.33],
+        [14.0, 7.66],
+        [13.4, 6.81],
+        [10.0, 6.33],
+        [14.0, 8.96],
+        [12.5, 6.82],
+        [9.15, 7.2],
+        [11.5, 7.2],
+        [3.03, 4.23],
+        [12.2, 7.83],
+        [2.02, 4.47],
+        [1.05, 3.33],
+        [4.05, 4.96],
+        [6.03, 7.24],
+        [12.0, 6.26],
+        [12.0, 8.84],
+        [7.08, 5.82],
+        [5.02, 5.68]
+      ],
+      type: "scatter",
+      tooltip: {
+        formatter: function (params) {
+          return "月份: " + params.name + "<br />销量: " + params.value;
+        }
+      }
+    }
+  ]
+});
+
+</script>
+
+<template>
+  <div ref="chartRef" style="width: 100%; height: 55vh" />
+</template>
