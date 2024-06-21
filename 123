@@ -1,84 +1,104 @@
-<template>
-  <div class="h-[340px]">
-    <div ref="chartRef" style="width: 100%; height: 100vh" />
-  </div>
-</template>
+// 抽离可公用的工具函数等用于系统管理页面逻辑
+import { computed } from "vue";
+import { useDark } from "@pureadmin/utils";
+import { ElMessageBox } from "element-plus";
 
-<script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
-import { useDark, useECharts } from '@pureadmin/utils';
-
-// 兼容dark主题
-const { isDark } = useDark();
-let theme = computed(() => {
-  return isDark.value ? 'dark' : 'default';
-});
-
-// 初始化ECharts
-const chartRef = ref();
-const { setOptions, getInstance } = useECharts(chartRef, { theme });
-
-// 根据配置项渲染ECharts
-setOptions({
-  tooltip: {
-    trigger: 'item',
-    axisPointer: {
-      type: 'cross'
-    }
-  },
-  xAxis: [
-    {
-      type: 'value'
-    }
-  ],
-  yAxis: [
-    {
-      type: 'value'
-    }
-  ],
-  series: [
-    {
-      symbolSize: 8,
-      data: [
-        [10.0, 8.04],
-        [8.07, 6.95],
-        [13.0, 7.58],
-        [9.05, 8.81],
-        [11.0, 8.33],
-        [14.0, 7.66],
-        [13.4, 6.81],
-        [10.0, 6.33],
-        [14.0, 8.96],
-        [12.5, 6.82],
-        [9.15, 7.2],
-        [11.5, 7.2],
-        [3.03, 4.23],
-        [12.2, 7.83],
-        [2.02, 4.47],
-        [1.05, 3.33],
-        [4.05, 4.96],
-        [6.03, 7.24],
-        [12.0, 6.26],
-        [12.0, 8.84],
-        [7.08, 5.82],
-        [5.02, 5.68]
-      ],
-      type: 'scatter',
-      tooltip: {
-        formatter: function (params) {
-          return '月份: ' + params.name + '<br />销量: ' + params.value;
-        }
-      }
-    }
-  ]
-});
-
-onMounted(() => {
-  getInstance().on('click', function (params) {
-    if (params.seriesType === 'scatter') {
-      alert('你点击了点: \nX: ' + params.value[0] + '\nY: ' + params.value[1]);
-      console.log(params);
-    }
+export function usePublicHooks() {
+  const { isDark } = useDark();
+  const router = useRouter();
+  const switchStyle = computed(() => {
+    return {
+      "--el-switch-on-color": "#6abe39",
+      "--el-switch-off-color": "#e84749"
+    };
   });
-});
-</script>
+
+  const tagStyle = computed(() => {
+    return (status: number) => {
+      return status === 1
+        ? {
+          "--el-tag-text-color": isDark.value ? "#6abe39" : "#389e0d",
+          "--el-tag-bg-color": isDark.value ? "#172412" : "#f6ffed",
+          "--el-tag-border-color": isDark.value ? "#274a17" : "#b7eb8f"
+        }
+        : {
+          "--el-tag-text-color": isDark.value ? "#e84749" : "#cf1322",
+          "--el-tag-bg-color": isDark.value ? "#2b1316" : "#fff1f0",
+          "--el-tag-border-color": isDark.value ? "#58191c" : "#ffa39e"
+        };
+    };
+  });
+
+  const tableHeaderStyle = computed(() => {
+    return {
+      background: 'var(--el-fill-color-light)',
+      color: 'var(--el-text-color-primary)'
+    }
+  })
+
+  const tableHeaderStyleBlue = computed(() => {
+    return {
+      background: 'var(--el-color-primary)',
+      color: 'white'
+    }
+  })
+
+  const exportDialog = ({
+    firstTitle,
+    callback,
+  }: {
+    callback: () => {};
+    firstTitle?: string;
+    secondContent?: string;
+    // router: any
+  }) => {
+    ElMessageBox.confirm(
+      `<div class="flex flex-col pl-4">
+        <span class="font-bold text-[16px]">${firstTitle}</span>
+        <span>${t('点击确认立即导出')}</span>
+      </div>`,
+      t('操作确认'),
+      {
+        confirmButtonText: t('确定'),
+        cancelButtonText: t('取消'),
+        customClass: 'export_dialog',
+        dangerouslyUseHTMLString: true
+      }
+    )
+      .then(async () => {
+        await callback();
+        ElMessageBox.confirm(
+          `<div class="flex flex-col pl-4">
+            <span class="font-bold text-[16px]">${t('正在执行导出任务')}</span>
+            <span>${t('点击确认前往任务中心?')}</span>
+          </div>`,
+          t(''),
+          {
+            confirmButtonText: t('确定'),
+            cancelButtonText: t('留在当前页面'),
+            customClass: 'export_dialog',
+            dangerouslyUseHTMLString: true
+          }
+        ).then(() => {
+          console.log('index.ts文件 83==============行打印=', router);
+          router.push('/taskCenter');
+        });
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+
+  return {
+    /** 当前网页是否为`dark`模式 */
+    isDark,
+    /** 表现更鲜明的`el-switch`组件  */
+    switchStyle,
+    /** 表现更鲜明的`el-tag`组件  */
+    tagStyle,
+    exportDialog,
+    tableHeaderStyle,
+    tableHeaderStyleBlue
+  };
+}
