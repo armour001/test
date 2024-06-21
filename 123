@@ -2,10 +2,12 @@
 import { computed } from "vue";
 import { useDark } from "@pureadmin/utils";
 import { ElMessageBox } from "element-plus";
+import { useRouter } from "vue-router";
 
 export function usePublicHooks() {
   const { isDark } = useDark();
   const router = useRouter();
+  console.log('index.ts文件 10==============行打印=', router);
   const switchStyle = computed(() => {
     return {
       "--el-switch-on-color": "#6abe39",
@@ -47,10 +49,9 @@ export function usePublicHooks() {
     firstTitle,
     callback,
   }: {
-    callback: () => {};
+    callback: () => void;
     firstTitle?: string;
     secondContent?: string;
-    // router: any
   }) => {
     ElMessageBox.confirm(
       `<div class="flex flex-col pl-4">
