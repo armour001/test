@@ -1,9 +1,30 @@
-  "k7d4f745d": "点击确认立即导出",
-  "k-40f2b828": "正在执行导出任务",
-  "k-592cee74": "点击确认前往任务中心?",
-  "k-a0b9dd": "留在当前页面",
-  "k-16b2c3d5": "操作方式",
-  "k-1344e083": "收到事件源时间",
-  "k130cc590": "事件列表",
-  "kd67061": "导出当前事件列表数据?",
-  "k-196fd4": "距离比赛开赛时间"
+const getBetDetail = async (orderIdList: (string | number)[]) => {
+  const res = await Promise.allSettled(
+    orderIdList.map((orderId: string) => {
+      return API.getCurrentBet({
+        orderId,
+        queryType: 1,
+        pageSize: 20,
+        pageNum: 1,
+        export: false
+      });
+    })
+  );
+  res.forEach(item => {
+    if (item.value.code) return;
+    console.log('index.vue文件 362==============行打印=', item.value);
+  });
+  // // const res =API.getCurrentBet({
+  //   orderId,
+  //   queryType: 1,
+  //   pageSize: 20,
+  //   pageNum: 1,
+  //   export: false
+  // });
+  // if (res.code) return message(res.msg, { type: 'error' });
+  // Object.assign(betInfo, res.data.pageData[0]);
+};
+
+ts 报错 
+类型“PromiseSettledResult<any>”上不存在属性“value”。
+  类型“PromiseRejectedResult”上不存在属性“value”。ts-plugin(2339
