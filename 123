@@ -1,163 +1,50 @@
-<template>
-  <PlusSearch
-    class="bg-bg_color w-[99/100] pl-8 pt-[12px] pb-[12px]"
-    v-model="selfForm"
-    :columns="columns"
-    label-position="right"
-    @search="search"
-    @reset="handleRest"
-    :has-unfold="true"
-    show-number="4"
-    labelWidth="auto"
-    :defaultValues="defaultValue"
-    :searchText="t('筛选')"
-    :resetText="t('重置')"
-    :colProps="{
-      xl: locale === 'zh' ? 5 : 8,
-      lg: 8,
-      md: 8
-    }"
-    :searchLoading="loading"
-    :rowProps="{ gutter: 10 }"
-  />
-</template>
 
-<script setup lang="ts">
-import {
-  type PlusColumn,
-  type FieldValues,
-  PlusSearch
-} from 'plus-pro-components';
-import { t } from '@/plugins/i18n';
-import { searchFormType } from '../utils/types';
-import { formatNumber, inputRestrictions } from '@/utils/formatNumber';
-import { useMatchStore } from '@/store/match';
-import {
-  SPORT_ID_MAP,
-  ESPORT_ID_MAP,
-  SPORT_CATEGORY
-} from '@/utils/maps/sports_map';
-import { useTranslationLang } from '@/layout/hooks/useTranslationLang';
+> Mattress [ˈmætrəs] This mattress is very comfortable //adj -> comfortable
+> Duvet cover [/duːˈveɪˈkʌvər/] The duvet cover needs to be washed
+> Bed [/bɛd/] I need to change the sheets on the bed
+> Sheet [/ʃiːt/] Can you help me fold the sheets //fold [n-or-v] -> There is a fold in the paper v-> please flod the clothes
+> Quilt [/kwɪlt/] It's cold,lets add an extra quilt adj -> extra  
+> Pillowcase [/ˈpɪloʊˌkeɪs/] I bought new pillowcase for the pillows v -> bought
+> pillow [ˈpɪloʊ] This pillow is too soft for me adj-> soft
+> Wall [wɔːl] Lets paint the wall a different color n -> paint
+> floor [flɔːr] Plese mop the floor after dinner example -> mop the floor
+> Ceiling [ˈsiːlɪŋ] The ceiling fan is not working
+> Chandelier ['ˌʃændəˈlɪr'] The Chandelier adds elegance to the room n-> elegance
+> window [ˈwɪndoʊ] Could you please open the window
+> Windowsill [ˈwɪndoʊˌsɪl] I like to put plants on the windowsill
+> Curtain [ˈkɜːrtən] Close the curtains before you go to sleep
+> Chair ['tʃɛr'] Can you pass me that chair ?
+> Bedroom door [ˈbɛdˌruːmdɔːr] Dont forget to lock the bedroom door
+> Door lock [dɔːrlɑːk] The door lock is broken
+> Key [kiː] I cant find my keys
+> Headboard [ˈhɛdˌbɔːrd] The headboard is very stylish adj -> stylish
+> Nightstand ['naɪtˌstænd'] I keep a book on my nightstand
+> AshTray [æʃˌtreɪ] Please use the ashtray
+> Cigarette butt [ˌsɪɡəˈrɛtbʌt] Dont throw the cigarette butts on the floor
+> Tissue [ˈtɪʃuː] Can you pass me the tissue
+> Cigarette [ˌsɪɡəˈrɛt] Smoking cigarettes is harmful to ypur health // adj => harmful
+> Candle [ˈkændl] Lets light some candles for dinner
+> suitcase [/ˈsuːt.keɪs/] I packed my clothes into the suitcase for the trip
+> wardrobe [/ˈwɔːr.drəʊb/] she opened the wardrobe to choose a dress
+> Air conditioner [/eərkənˈdɪʃənər/] My air conditioner is broken, so my room is very hot.
+> Air conditioner remote I can't find the air conditioner remote
 
-const props = defineProps<{
-  loading: boolean;
-  form: searchFormType;
-  levelList: ConfigCenterDataAPI.leagueLevelList[];
-}>();
+### 2
 
-const { locale } = useTranslationLang();
-const selfForm = ref<FieldValues>(props.form);
-const defaultValue = ref<FieldValues>(JSON.parse(JSON.stringify(props.form)));
-const gameClassify = ref<{ label: string; value: number }[]>(SPORT_ID_MAP);
-const matchStore = useMatchStore();
-//- 联赛更改
-const chagenMatchType = (type: 0 | 1 | 2) => {
-  props.form.sportId = '';
-  gameClassify.value = type === 1 ? ESPORT_ID_MAP : SPORT_ID_MAP;
-};
-
-const emits = defineEmits(['onSearch']);
-const search = () => {
-  Object.assign(props.form, selfForm.value);
-  emits('onSearch', ...['reload']);
-};
-//- 表单重置
-const handleRest = () => {
-  Object.assign(props.form, defaultValue.value);
-  gameClassify.value = props.form.category === 1 ? ESPORT_ID_MAP : SPORT_ID_MAP;
-  search();
-};
-
-const columns: PlusColumn[] = [
-  {
-    label: t('赛事类型'),
-    prop: 'category',
-    valueType: 'select',
-    options: SPORT_CATEGORY,
-    fieldProps: {
-      onChange: chagenMatchType
-    }
-  },
-  {
-    label: t('赛种'),
-    prop: 'sportId',
-    valueType: 'select',
-    options: computed(() => gameClassify.value)
-  },
-  {
-    label: t('联赛等级'),
-    prop: 'riskLevel',
-    valueType: 'select',
-    disabled: false,
-    options: computed(() => {
-      const sportidMap = { 1: 0, 2: 1 };
-      let list = [];
-      if (props.form.category === 1) {
-        list = props.levelList.filter(item => item.game_type === 3);
-      } else if (
-        sportidMap[+props.form.sportId as keyof typeof sportidMap] === 0 ||
-        sportidMap[+props.form.sportId as keyof typeof sportidMap] === 1
-      ) {
-        list = props.levelList.filter(
-          item =>
-            item.game_type ===
-            sportidMap[+props.form.sportId as keyof typeof sportidMap]
-        );
-      } else {
-        list = props.levelList.filter(item => item.game_type === 2);
-      }
-      return list.map(item => ({
-        label: item.league_level === -1 ? t('未评级') : item.league_level,
-        value: item.league_level
-      }));
-    })
-
-    // hideInSearch: computed(() => {
-    //   return props.form.category !== 1 && props.form.sportId === '';
-    // })
-  },
-  {
-    label: t('联赛ID'),
-    prop: 'leagueId',
-    fieldProps: {
-      formatter: (v: string) => formatNumber(v, 10),
-      onChange: search
-    }
-  },
-  {
-    label: t('热门排序'),
-    prop: 'level',
-    fieldProps: {
-      formatter: (v: string) => inputRestrictions(v),
-      placeholder: t('请输入1-200之间的数字')
-    }
-  },
-
-  {
-    label: t('联赛中文名'),
-    prop: 'leagueNameCn',
-    fieldProps: { maxlength: 20 }
-  },
-  {
-    label: t('联赛英文名'),
-    prop: 'leagueNameEn',
-    fieldProps: { maxlength: 30 }
-  },
-  {
-    label: t('国家'),
-    prop: 'countryId',
-    valueType: 'select',
-    options: matchStore.countryList.map(item => ({
-      label: item.countryNameCn,
-      value: item.countryId
-    })),
-    fieldProps: {
-      onChange: chagenMatchType
-    }
-  },
-  {
-    label: t('188数据源联赛杯ID'),
-    prop: 'leagueId188Bet'
-  }
-];
-</script>
+> midicine [/ˈmɛdɪsɪn/] I need to take my medicine every morning
+> anti-inflammatory drug [/ˌæntiɪnˈflæmətəri drʌg/] -> The doctor prescribed an anti-inflammatory drug for my pain.
+> blood gluceose meter [/blʌd ˈɡluːkəʊs ˈmiːtə/] -> She uses a blood glucose meter to monitor her diabeters
+> blood pressure monitor [/blʌd ˈprɛʃə ˈmɒnɪtə/] -> It's important to check your blood pressure with a blood pressure monitor
+> Clothes [/kloʊðz/] I need to sort out my clothes
+> T-shirt [/ˈtiː.ʃɜːrt/] I bought a new T-shirt yesterday
+> Pants [/pænts/] These pants are very comfortable
+> Underpants [/ˈʌn.dɚ.pænts/] I need to buy some new underpants
+> socks [/sɑːks/] I can't find my matching socks
+> Hanger [/ˈhæŋ.ɚ/] Please hang your coat on the hanger.
+> raincoat [/ˈreɪn.koʊt/] Dont't forget to bring your raincoat. its supposed to rain today.
+> shorts [/ʃɔːrts/] It's too hot for jeans, so I'm wearing shorts today.
+> Mirror [/ˈmɪrər/] She looked at herself in the mirror
+> Drawer [/drɔːr/] He opened the drawer to find pen
+> nail clipper [neɪlˈklɪpər] I need to buy a new nail clipper because mine is broken 
+> ear spoon [ɪrspun] it's net safe to use ear spoons to clean your ears; it can damage your eardrums
+> plastic bag [ˈplæstɪkbæɡ] Please put the groceries in a plastic bag 
